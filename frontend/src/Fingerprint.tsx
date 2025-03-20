@@ -1,3 +1,5 @@
+// Security thing. Shows user footprint
+
 import { getFingerprint } from '@thumbmarkjs/thumbmarkjs';
 import { useEffect, useState } from 'react';
 
