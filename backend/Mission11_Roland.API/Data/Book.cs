@@ -2,6 +2,7 @@
 
 namespace Mission11_Roland.API.Data
 {
+    // create a class to represent the book that matches the database
     public class Book
     {
         [Key]
