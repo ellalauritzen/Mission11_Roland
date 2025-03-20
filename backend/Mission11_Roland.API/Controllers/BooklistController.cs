@@ -17,11 +17,20 @@ namespace Mission11_Roland.API.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IEnumerable<Book> Get()
+        public IActionResult GetAllBooks(int pageSize = 10, int pageNum = 1)
         {
-            var bookList = _context.Books.ToList();
+            var bookList = _context.Books
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-            return bookList;
+            var totalNumBooks = _context.Books.Count();
+
+            return Ok(new
+            {
+                Books = bookList,
+                TotalNumBooks = totalNumBooks
+            });
         }
     }
 }

@@ -6,6 +6,7 @@ function App() {
   return (
     <>
       <BookList />
+      <br />
       <Fingerprint />
     </>
   );

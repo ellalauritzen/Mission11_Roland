@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ellal\\OneDrive - Brigham Young University\\School\\413\\Mission11_Roland\\backend\\Mission11_Roland.API\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2F1FDA7F-0265-4B43-A386-9837E9E25FC1}|Mission11_Roland.API.csproj|c:\\users\\ellal\\onedrive - brigham young university\\school\\413\\mission11_roland\\backend\\mission11_roland.api\\controllers\\booklistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F1FDA7F-0265-4B43-A386-9837E9E25FC1}|Mission11_Roland.API.csproj|solutionrelative:controllers\\booklistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +23,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BooklistController.cs",
+              "DocumentMoniker": "C:\\Users\\ellal\\OneDrive - Brigham Young University\\School\\413\\Mission11_Roland\\backend\\Mission11_Roland.API\\Controllers\\BooklistController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BooklistController.cs",
+              "ToolTip": "C:\\Users\\ellal\\OneDrive - Brigham Young University\\School\\413\\Mission11_Roland\\backend\\Mission11_Roland.API\\Controllers\\BooklistController.cs",
+              "RelativeToolTip": "Controllers\\BooklistController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwCEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T15:51:22.585Z",
+              "EditorCaption": ""
             }
           ]
         }
