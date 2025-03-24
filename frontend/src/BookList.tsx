@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
 
 //component to list out books
-function BookList() {
+function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [pageNum, setPageNum] = useState<number>(1);
@@ -10,14 +10,20 @@ function BookList() {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>('asc'); // Default: A-Z sorting
 
-
   // stops unnecessary API calls
   useEffect(() => {
     const fetchBooks = async () => {
+      const categoryParams = selectedCategories
+        .map((c) => `category=${encodeURIComponent(c)}`)
+        .join('&');
+
       try {
         //calls database API
         const response = await fetch(
-          `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}`,
+          `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length > 0 ? `&${categoryParams}` : ''}`,
+          {
+            credentials: 'include',
+          },
         );
         //error handling
         if (!response.ok) {
@@ -43,7 +49,7 @@ function BookList() {
         setTotalPages(
           Math.max(1, Math.ceil((data.totalNumBooks || 0) / pageSize)),
         );
-      //error handling. sets all to 0 if books aren't found
+        //error handling. sets all to 0 if books aren't found
       } catch (error) {
         console.error('Error fetching books:', error);
         setBooks([]);
@@ -53,12 +59,11 @@ function BookList() {
     };
 
     fetchBooks();
-  }, [pageSize, pageNum, sortOrder]); // Sort order dependency added
+  }, [pageSize, pageNum, sortOrder, selectedCategories]); // Sort order dependency added
 
   return (
     <>
-    {/* Returns a list of books with the option to sort */}
-      <h1 className="text-center my-4">Books: </h1>
+      {/* Returns a list of books with the option to sort */}
       <div className="container">
         {/* Sorting Dropdown */}
         <div className="d-flex justify-content-end mb-3">
@@ -91,10 +96,15 @@ function BookList() {
                       {b.classification}
                     </li>
                     <li>
+                      <strong>Category: </strong>
+                      {b.category}
+                    </li>
+                    <li>
                       <strong>Number of Pages:</strong> {b.pageCount}
                     </li>
                     <li>
-                      <strong>Price: $</strong>{b.price}
+                      <strong>Price: $</strong>
+                      {b.price}
                     </li>
                     <li>
                       <strong>Publisher:</strong> {b.publisher}

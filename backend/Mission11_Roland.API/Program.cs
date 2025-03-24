@@ -15,7 +15,17 @@ builder.Services.AddDbContext<BooklistDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("BookstoreConnection"));
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowFrontend",
+        configurePolicy: policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -26,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(x => x.WithOrigins("http://localhost:3000"));
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 

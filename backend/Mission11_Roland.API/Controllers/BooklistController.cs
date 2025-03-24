@@ -10,8 +10,8 @@ namespace Mission11_Roland.API.Controllers
     [ApiController]
     public class BooklistController : ControllerBase
     {
-       // create private variable to hold the context
-       private BooklistDbContext _context;
+        // create private variable to hold the context
+        private BooklistDbContext _context;
 
 
         // create a constructor to inject the context
@@ -23,22 +23,51 @@ namespace Mission11_Roland.API.Controllers
 
         // create a method to get all books
         [HttpGet("AllBooks")]
-        public IActionResult GetAllBooks(int pageSize = 10, int pageNum = 1)
+        public IActionResult GetAllBooks(int pageSize = 10, int pageNum = 1, [FromQuery] List<string>? category = null)
         {
+            var query = _context.Books.AsQueryable();
+
+            if(category != null && category.Any())
+            {
+                query = query.Where(b => category.Contains(b.Category));
+            }
+
+            var totalNumBooks = query.Count();
+
             // get the books from the context   
             var bookList = _context.Books
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            // get the total number of books
-            var totalNumBooks = _context.Books.Count();
+            string favBooKClassification = Request.Cookies["FavoriteClassification"];
+
+            Console.WriteLine("-----COOKIE------\n" + favBooKClassification);
+
+            HttpContext.Response.Cookies.Append("FavoriteClassification", "Fiction", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(1)
+            });
 
             return Ok(new
             {
                 Books = bookList,
                 TotalNumBooks = totalNumBooks
             });
+
+        }
+
+        [HttpGet("GetBookCategories")]
+        public IActionResult GetBookCategories()
+        {
+            var bookCategories = _context.Books
+             .Select(b => b.Category)
+             .Distinct()
+             .ToList();
+            return Ok(bookCategories);
         }
     }
 }
