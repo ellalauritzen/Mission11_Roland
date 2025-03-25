@@ -24,7 +24,7 @@ namespace Mission11_Roland.API.Controllers
         // create a method to get all books
         [HttpGet("AllBooks")]
         public IActionResult GetAllBooks(int pageSize = 10, int pageNum = 1, [FromQuery] List<string>? category = null)
-        {
+        {+
             var query = _context.Books.AsQueryable();
 
             if(category != null && category.Any())

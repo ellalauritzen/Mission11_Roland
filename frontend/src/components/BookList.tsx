@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
+import { useNavigate } from 'react-router-dom';
 
 //component to list out books
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
@@ -9,6 +10,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>('asc'); // Default: A-Z sorting
+  const navigate = useNavigate();
 
   // stops unnecessary API calls
   useEffect(() => {
@@ -114,6 +116,15 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
                       {b.isbn}
                     </li>
                   </ul>
+
+                  <div>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => navigate(`/bookDetails/${b.title}/${b.bookID}`)}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
