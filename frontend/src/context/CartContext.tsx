@@ -18,7 +18,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const existingItem = prevCart.find((i) => i.bookId === item.bookId);
       const updatedCart = prevCart.map((i) =>
         i.bookId === item.bookId
-          ? { ...i, quantity: i.quantity + item.quantity }
+          ? { ...i, quantity: i.quantity + item.quantity,
+              subtotal: (i.quantity + item.quantity) * i.price,
+           }
           : i,
       );
 

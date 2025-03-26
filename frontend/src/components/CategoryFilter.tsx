@@ -20,7 +20,7 @@ function CategoryFilter({
         setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
-        setCategories([]);
+        // setCategories([]);
       }
     };
 
@@ -45,7 +45,6 @@ function CategoryFilter({
               className="category-checkbox"
               type="checkbox"
               id={c}
-              name={c}
               value={c}
               onChange={handleCheckboxChange}
             />

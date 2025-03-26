@@ -19,14 +19,19 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         .map((c) => `category=${encodeURIComponent(c)}`)
         .join('&');
 
+      // Debug log to check the constructed URL
+      console.log('API URL:', `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`);
+      console.log('Selected Categories:', selectedCategories);
+
       try {
         //calls database API
         const response = await fetch(
-          `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length > 0 ? `&${categoryParams}` : ''}`,
+          `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`,
           {
             credentials: 'include',
           },
         );
+
         //error handling
         if (!response.ok) {
           throw new Error('Failed to fetch books');
@@ -34,12 +39,15 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
 
         //data returned as json
         const data = await response.json();
+        
+        // Debug log to check raw response
+        console.log('Raw API response:', data);
+        console.log('Books before sorting:', data.books);
 
         // Sort books by title before setting state
         const sortedBooks = [...(data.books || [])].sort((a, b) => {
           const titleA = a.title.replace(/^The\s+/i, ''); // Remove "The " from start
           const titleB = b.title.replace(/^The\s+/i, '');
-
           return sortOrder === 'asc'
             ? titleA.localeCompare(titleB)
             : titleB.localeCompare(titleA);
@@ -51,6 +59,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         setTotalPages(
           Math.max(1, Math.ceil((data.totalNumBooks || 0) / pageSize)),
         );
+
         //error handling. sets all to 0 if books aren't found
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -67,6 +76,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
     <>
       {/* Returns a list of books with the option to sort */}
       <div className="container">
+        
         {/* Sorting Dropdown */}
         <div className="d-flex justify-content-end mb-3">
           <label className="me-2">
@@ -81,7 +91,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
             </select>
           </label>
         </div>
-
         <div className="row">
           {books.map((b) => (
             <div key={b.bookID} className="col-12 mb-3">
@@ -116,11 +125,10 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
                       {b.isbn}
                     </li>
                   </ul>
-
                   <div>
                     <button
                       className="btn btn-primary btn-sm"
-                      onClick={() => navigate(`/bookDetails/${b.title}/${b.bookID}`)}
+                      onClick={() => navigate(`/bookDetails/${b.title}/${b.bookID}/${b.price}`)}
                     >
                       Buy Now
                     </button>
@@ -130,7 +138,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
             </div>
           ))}
         </div>
-
         {/* Pagination Buttons */}
         <div className="d-flex justify-content-center gap-2 mt-3">
           <button
@@ -140,7 +147,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
           >
             Previous
           </button>
-
           {[...Array(totalPages)].map((_, i) => (
             <button
               key={i + 1}
@@ -151,7 +157,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
               {i + 1}
             </button>
           ))}
-
           <button
             className="btn btn-primary btn-sm"
             disabled={pageNum === totalPages}
@@ -160,7 +165,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
             Next
           </button>
         </div>
-
         {/* Page Size Selector */}
         <div className="d-flex justify-content-center mt-3">
           <label>

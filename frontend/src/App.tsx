@@ -14,15 +14,17 @@ function App() {
     <>
       <CartProvider>
         <Router>
-          <Routes>
-            <Route path="/" element={<BooksPage />} />
-            <Route
-              path="/bookDetails/:title/:bookId"
-              element={<BookDetailsPage />}
-            />
-            <Route path="/books" element={<BooksPage />} />
-            <Route path="/cart" element={<CartPage />} />
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<BooksPage />} />
+              <Route
+                path="/bookDetails/:title/:bookId/:price"
+                element={<BookDetailsPage />}
+              />
+              <Route path="/books" element={<BooksPage />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Routes>
+          </div>
         </Router>
         <Fingerprint />
       </CartProvider>
