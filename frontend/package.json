@@ -12,6 +12,7 @@
   "dependencies": {
     "@thumbmarkjs/thumbmarkjs": "^0.19.1",
     "bootstrap": "^5.3.3",
+    "lucide-react": "^0.485.0",
     "react": "^19.0.0",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^19.0.0",

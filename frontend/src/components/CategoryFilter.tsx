@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import './CategoryFilter.css';
 
 function CategoryFilter({
-  selectedCategories, setSelectedCategories,
+  selectedCategories,
+  setSelectedCategories,
 }: {
-    selectedCategories: string[];
+  selectedCategories: string[];
   setSelectedCategories: (categories: string[]) => void;
 }) {
   const [categories, setCategories] = useState<string[]>([]);
@@ -20,7 +20,6 @@ function CategoryFilter({
         setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
-        // setCategories([]);
       }
     };
 
@@ -36,22 +35,42 @@ function CategoryFilter({
   }
 
   return (
-    <div className="category-filter">
-      <h5>Book Types</h5>
-      <div className="category-list">
-        {categories.map((c) => (
-          <div key={c} className="category-item">
-            <input
-              className="category-checkbox"
-              type="checkbox"
-              id={c}
-              value={c}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor={c}>{c}</label>
-          </div>
-        ))}
+    <div className="card shadow-sm mb-4">
+      <div className="card-header bg-primary text-white">
+        <h5 className="card-title mb-0">Book Categories</h5>
       </div>
+      <div className="card-body">
+        <div className="list-group list-group-flush">
+          {categories.map((c) => (
+            <label
+              key={c}
+              className="list-group-item list-group-item-action d-flex align-items-center"
+            >
+              <input
+                className="form-check-input me-3"
+                type="checkbox"
+                value={c}
+                checked={selectedCategories.includes(c)}
+                onChange={handleCheckboxChange}
+              />
+              <span className="flex-grow-1">{c}</span>
+              <span className="badge bg-secondary ms-2">
+                {/* You could add a count of books in this category if available */}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+      {selectedCategories.length > 0 && (
+        <div className="card-footer">
+          <button
+            className="btn btn-outline-secondary btn-sm w-100"
+            onClick={() => setSelectedCategories([])}
+          >
+            Clear All Filters
+          </button>
+        </div>
+      )}
     </div>
   );
 }
