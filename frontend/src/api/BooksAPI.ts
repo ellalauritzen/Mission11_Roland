@@ -6,7 +6,7 @@ interface FetchBooksResponse {
 }
 
 const API_URL =
-  'https://mission13-er-backend.azurewebsites.net/Booklist/';
+  'https://mission13-ellaroland-backend.azurewebsites.net/BookList/';
 
 export const fetchBooks = async (
   pageSize: number,
