@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "AllowFrontend",
         configurePolicy: policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:3000", "https://lively-sand-02c29681e.6.azurestaticapps.net/")
                 //.AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
