@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
 import { useNavigate } from 'react-router-dom';
+import { fetchBooks } from '../api/BooksAPI';
+import Pagination from './Pagination';
 
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [pageNum, setPageNum] = useState<number>(1);
-  const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>('asc');
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const categoryParams = selectedCategories
-        .map((c) => `category=${encodeURIComponent(c)}`)
-        .join('&');
-
+    const loadBooks = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/Booklist/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`,
-          {
-            credentials: 'include',
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch books');
-        }
-
-        const data = await response.json();
+        setLoading(true);
+        const data = await fetchBooks(pageSize, pageNum, selectedCategories);
 
         const sortedBooks = [...(data.books || [])].sort((a, b) => {
           const titleA = a.title.replace(/^The\s+/i, '');
@@ -40,20 +29,26 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         });
 
         setBooks(sortedBooks);
-        setTotalItems(data.totalNumBooks || 0);
         setTotalPages(
           Math.max(1, Math.ceil((data.totalNumBooks || 0) / pageSize)),
         );
+        // } catch (error) {
+        //   console.error('Error fetching books:', error);
+        //   setBooks([]);
+        //   setTotalItems(0);
+        //   setTotalPages(1);
       } catch (error) {
-        console.error('Error fetching books:', error);
-        setBooks([]);
-        setTotalItems(0);
-        setTotalPages(1);
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchBooks();
+    loadBooks();
   }, [pageSize, pageNum, sortOrder, selectedCategories]);
+
+  if (loading) return <p>Loading books...</p>;
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <div className="container-fluid px-4 py-3">
@@ -114,69 +109,16 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         ))}
       </div>
 
-      {/* Pagination Section */}
-      <div className="row mt-4">
-        <div className="col-12 d-flex justify-content-center align-items-center">
-          <nav aria-label="Book list navigation">
-            <ul className="pagination">
-              <li className={`page-item ${pageNum === 1 ? 'disabled' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => setPageNum(pageNum - 1)}
-                  disabled={pageNum === 1}
-                >
-                  Previous
-                </button>
-              </li>
-              {[...Array(totalPages)].map((_, i) => (
-                <li
-                  key={i + 1}
-                  className={`page-item ${pageNum === i + 1 ? 'active' : ''}`}
-                >
-                  <button
-                    className="page-link"
-                    onClick={() => setPageNum(i + 1)}
-                  >
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
-              <li
-                className={`page-item ${pageNum === totalPages ? 'disabled' : ''}`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => setPageNum(pageNum + 1)}
-                  disabled={pageNum === totalPages}
-                >
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      {/* Page Size Selector */}
-      <div className="row mt-3">
-        <div className="col-12 d-flex justify-content-center">
-          <div className="d-flex align-items-center">
-            <span className="me-2 text-muted">Results per page:</span>
-            <select
-              className="form-select form-select-sm w-auto"
-              value={pageSize}
-              onChange={(p) => {
-                setPageSize(Number(p.target.value));
-                setPageNum(1);
-              }}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <Pagination
+        currentPage={pageNum}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        onPageChange={setPageNum}
+        onPageSizeChange={(newSize) => {
+          setPageSize(newSize);
+          setPageNum(1);
+        }}
+      />
     </div>
   );
 }

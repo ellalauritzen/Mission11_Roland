@@ -69,3 +69,4 @@ C:\Users\ellal\OneDrive - Brigham Young University\School\413\Mission11_Roland\b
 C:\Users\ellal\OneDrive - Brigham Young University\School\413\Mission11_Roland\backend\Mission11_Roland.API\obj\Debug\net8.0\Mission11_Roland.API.pdb
 C:\Users\ellal\OneDrive - Brigham Young University\School\413\Mission11_Roland\backend\Mission11_Roland.API\obj\Debug\net8.0\Mission11_Roland.API.genruntimeconfig.cache
 C:\Users\ellal\OneDrive - Brigham Young University\School\413\Mission11_Roland\backend\Mission11_Roland.API\obj\Debug\net8.0\ref\Mission11_Roland.API.dll
+C:\Users\ellal\OneDrive - Brigham Young University\School\413\Mission11_Roland\backend\Mission11_Roland.API\bin\Debug\net8.0\Bookstore.sqlite
