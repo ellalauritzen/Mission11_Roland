@@ -5,7 +5,8 @@ interface FetchBooksResponse {
   totalNumBooks: number;
 }
 
-const API_URL = 'http://localhost:5000/Booklist';
+const API_URL =
+  'https://mission13-er-backend.azurewebsites.net/Booklist/AllBooks';
 
 export const fetchBooks = async (
   pageSize: number,
@@ -75,16 +76,15 @@ export const updateBook = async (
 
 export const deleteBook = async (bookId: number): Promise<void> => {
   try {
-    const response = await fetch(`${API_URL}/DeleteBook/${bookId}`,
-      {
-        method: 'DELETE'
-      });
+    const response = await fetch(`${API_URL}/DeleteBook/${bookId}`, {
+      method: 'DELETE',
+    });
 
     if (!response.ok) {
       throw new Error('Failed to delete book');
     }
   } catch (error) {
     console.error('Error deleting book:', error);
-    throw error
+    throw error;
   }
-}
+};

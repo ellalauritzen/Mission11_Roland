@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/89100cc6-aeef-47bf-b590-9532dc2f0265/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/Mission13-Ella-Backend",
+  "appService.deploySubpath": "backend\\Mission11_Roland.API\\publish"
+}
