@@ -5,14 +5,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BookDetailsPage from './pages/BookDetailsPage';
 import CartPage from './pages/CartPage';
 import { CartProvider } from './context/CartContext';
+import AdminBooksPage from './pages/AdminBooksPage';
 
 function App() {
   return (
     <CartProvider>
       <Router>
         <div className="d-flex flex-column min-vh-100">
-
-
           {/* Main Content */}
           <div className="container flex-grow-1">
             <div className="row justify-content-center">
@@ -25,6 +24,7 @@ function App() {
                   />
                   <Route path="/books" element={<BooksPage />} />
                   <Route path="/cart" element={<CartPage />} />
+                  <Route path="/adminbooks" element={<AdminBooksPage />} />
                 </Routes>
               </div>
             </div>

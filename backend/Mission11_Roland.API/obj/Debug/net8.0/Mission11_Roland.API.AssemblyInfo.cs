@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mission11_Roland.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d03ab824da064182faccf7fafbff016b1ca08303")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03d033088ae8ccb77eca27f7c85cf11d52753c7c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mission11_Roland.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mission11_Roland.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

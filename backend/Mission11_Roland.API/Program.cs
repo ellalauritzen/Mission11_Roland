@@ -21,11 +21,12 @@ builder.Services.AddCors(options =>
         configurePolicy: policy =>
         {
             policy.WithOrigins("http://localhost:3000")
-                .AllowCredentials()
+                //.AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
 });
+
 
 var app = builder.Build();
 
