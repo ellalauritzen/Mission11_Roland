@@ -1,7 +1,6 @@
-import React from 'react';
 import Fingerprint from './components/Fingerprint';
 import BooksPage from './pages/BooksPage';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BookDetailsPage from './pages/BookDetailsPage';
 import CartPage from './pages/CartPage';
 import { CartProvider } from './context/CartContext';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
 import { useNavigate } from 'react-router-dom';
 import { fetchBooks } from '../api/BooksAPI';
@@ -16,7 +16,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
 
   useEffect(() => {
     const loadBooks = async () => {
-      try{
+      try {
         setLoading(true);
         const data = await fetchBooks(pageSize, pageNum, selectedCategories);
 
@@ -37,7 +37,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         //   setBooks([]);
         //   setTotalItems(0);
         //   setTotalPages(1);
-      } catch (error){
+      } catch (error) {
         setError((error as Error).message);
       } finally {
         setLoading(false);
@@ -47,8 +47,8 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
     loadBooks();
   }, [pageSize, pageNum, sortOrder, selectedCategories]);
 
-  if (loading) return <p>Loading books...</p>
-  if (error) return <p className='text-red-500'>Error: {error}</p>;
+  if (loading) return <p>Loading books...</p>;
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <div className="container-fluid px-4 py-3">
